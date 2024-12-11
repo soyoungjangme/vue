@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>끝말잇기</title>
+</head>
+<body>
+    <div id="root">
+        <div>{{word}}</div>
+        <form v-on:submit="onSubmitForm">
+            <input type="text" ref="answer" v-model="value">
+            <button type="submit">입력</button>
+        </form>
+
+        <div>{{result}}</div>
+    </div>
+</body>
+<script>
+    const app = new Vue({ <!--vue한테 태그 통제권을 넘긴다.-->
+        el: '#root',
+        data: {
+            word:'제로초',
+            value: '',
+            result: '',
+        },
+        methods: {
+            onSubmitForm(e){
+                e.preventDefault();
+                <!--word의 마지막 글자 = value의 첫글자-->
+                if(this.word[this.word.length - 1] === this.value[0]){
+                    this.result = '정답';
+                    this.word = this.value;
+                    this.value = '';
+                    this.$refs.answer.focus();
+                } else {
+                    this.result = '땡';
+                    this.value = '';
+                    this.$refs.answer.focus();
+                }
+            },
+        },
+    });
+</script>
+</html>
